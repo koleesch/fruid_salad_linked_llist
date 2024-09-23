@@ -41,6 +41,56 @@ fn main() {
     fruit.push_back("Fig");
     fruit.push_back("Cherry");
 
+    print_fruit_salad(&fruit);
+
+    // insert fruit in at position 3
+    println!(
+        "Insert a fruit on position (min: {}, max: {}): ",
+        0_i32,
+        fruit.len()
+    );
+    let mut input: String = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    let pos: usize = input.trim().parse().unwrap();
+
+    println!("fruitname: ");
+    let mut input: String = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    insert_at(&mut fruit, pos, input.trim());
+
+    print_fruit_salad(&fruit);
+
+    println!(
+        "Remove a fruit on position (min: {}, max: {}): ",
+        0_i32,
+        fruit.len()
+    );
+    
+    let mut input: String = String::new();
+    std::io::stdin().read_line(&mut input).unwrap();
+    let pos: usize = input.trim().parse().unwrap();
+
+    let removed_fruit = remove_at(&mut fruit, pos);
+    println!("Removed fruit: {}", removed_fruit);
+    print_fruit_salad(&fruit);
+
+}
+
+fn insert_at<'a>(l: &mut LinkedList<&'a str>, idx: usize, val: &'a str) {
+    let mut tail = l.split_off(idx);
+    l.push_back(val);
+    l.append(&mut tail);
+}
+
+fn remove_at<'a>(l: &mut LinkedList<&'a str>, idx: usize) -> &'a str {
+    let mut tail = l.split_off(idx);
+    let result = l.pop_back().unwrap();
+    l.append(&mut tail);
+    result
+}
+
+
+fn print_fruit_salad(fruit: &LinkedList<&str>) {
     // Print the fruit salad
     println!("Fruit salad:");
 
